@@ -1,5 +1,74 @@
 #!/bin/bash
 
+# Copyright (c) 2014 Terry Burton
+#
+# Permission is hereby granted, free of charge, to any
+# person obtaining a copy of this software and associated
+# documentation files (the "Software"), to deal in the
+# Software without restriction, including without
+# limitation the rights to use, copy, modify, merge,
+# publish, distribute, sublicense, and/or sell copies of
+# the Software, and to permit persons to whom the Software
+# is furnished to do so, subject to the following
+# conditions:
+#
+# The above copyright notice and this permission notice
+# shall be included in all copies or substantial portions
+# of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
+# KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
+# THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+# PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+# THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+# DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+# CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+# IN THE SOFTWARE.
+
+# This script provides a simple continuous deployment
+# solution that allows Travis CI to deploy release assets to
+# GitHub Releases whenever a tag is pushed.
+#
+# It is created as a temporary solution whilst we await
+# GitHub support in Travis DPL: https://github.com/travis-ci/dpl
+#
+# Place this script somewhere like .travis/github-release.sh
+# then add something like this to your .travis.yml:
+#
+# after_success: .travis/github-release.sh "$TRAVIS_REPO_SLUG" "`head -1 src/VERSION`" build/release/*
+#
+# The first argument is your repository in for format
+# "username/repository", which Travis provides for you.
+#
+# The second argument is the release version which as a
+# sanity check should match the tag that you are releasing.
+# You could pass "`git describe`" to omit this check.
+#
+# The remaining arguments are a list of asset files that you
+# want to publish.
+#
+# The script requires you to create a GitHub OAuth access
+# token to facilitate the upload:
+#
+# https://help.github.com/articles/creating-an-access-token-for-command-line-use
+#
+# You must pass this securely in the GITHUBTOKEN environment
+# variable:
+#
+# http://docs.travis-ci.com/user/build-configuration/#Secure-environment-variables
+#
+# If during testing you create a local convenience file
+# containing GITHUBTOKEN then you MUST ensure that this
+# doesn't get pushed to your repository, perhaps by adding
+# it to a .gitignore file.
+#
+# Should you get stuck then look at a working example. This
+# code is being used by Barcode Writer in Pure PostScript
+# for automated deployment:
+#
+# https://github.com/terryburton/postscriptbarcode
+
 set -e
 
 REPO=$1 && shift
