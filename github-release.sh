@@ -27,28 +27,31 @@
 # IN THE SOFTWARE.
 
 # This script provides a simple continuous deployment
-# solution that allows Travis CI to deploy release assets to
-# GitHub Releases whenever a tag is pushed.
+# solution that allows Travis CI to publish a new GitHub 
+# release and upload assets to it whenever a tag is pushed.
 #
-# It is created as a temporary solution whilst we await
-# GitHub support in Travis DPL: https://github.com/travis-ci/dpl
+# It is created as a temporary solution whilst we wait for
+# Travis DPL to support GitHub:
+#
+# https://github.com/travis-ci/dpl
 #
 # Place this script somewhere like .travis/github-release.sh
 # then add something like this to your .travis.yml:
 #
 # after_success: .travis/github-release.sh "$TRAVIS_REPO_SLUG" "`head -1 src/VERSION`" build/release/*
 #
-# The first argument is your repository in for format
-# "username/repository", which Travis provides for you.
+# The first argument is your repository in the format
+# "username/repository", which Travis provides in the
+# TRAVIS_REPO_SLUG environment variable.
 #
 # The second argument is the release version which as a
 # sanity check should match the tag that you are releasing.
 # You could pass "`git describe`" to omit this check.
 #
 # The remaining arguments are a list of asset files that you
-# want to publish.
+# want to publish along with the release.
 #
-# The script requires you to create a GitHub OAuth access
+# The script requires that you create a GitHub OAuth access
 # token to facilitate the upload:
 #
 # https://help.github.com/articles/creating-an-access-token-for-command-line-use
@@ -58,10 +61,11 @@
 #
 # http://docs.travis-ci.com/user/build-configuration/#Secure-environment-variables
 #
-# If during testing you create a local convenience file
-# containing GITHUBTOKEN then you MUST ensure that this
-# doesn't get pushed to your repository, perhaps by adding
-# it to a .gitignore file.
+# For testing purposes you can create a local convenience
+# file in the script directory called GITHUBTOKEN that sets
+# the GITHUBTOKEN environment variable. If you do so you MUST
+# ensure that this doesn't get pushed to your repository,
+# perhaps by adding it to a .gitignore file.
 #
 # Should you get stuck then look at a working example. This
 # code is being used by Barcode Writer in Pure PostScript
