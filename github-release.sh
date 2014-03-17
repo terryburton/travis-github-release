@@ -30,7 +30,8 @@
 
 # This script provides a simple continuous deployment
 # solution that allows Travis CI to publish a new GitHub 
-# release and upload assets to it whenever a tag is pushed.
+# release and upload assets to it whenever an annotated or
+# signed tag is pushed (git tag -a/-s; git push --tags).
 #
 # It is created as a temporary solution whilst we wait for
 # Travis DPL to support GitHub:
@@ -48,7 +49,7 @@
 #
 # The second argument is the release version which as a
 # sanity check should match the tag that you are releasing.
-# You could pass "`git describe`" to omit this check.
+# You could pass "`git describe`" to satisfy this check.
 #
 # The remaining arguments are a list of asset files that you
 # want to publish along with the release.
