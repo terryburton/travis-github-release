@@ -118,7 +118,7 @@ EOF
 )
 RESULT=`curl -s -w "\n%{http_code}\n"     \
   -H "Authorization: token $GITHUBTOKEN"  \
-  --data "$JSON"                          \
+  -d "$JSON"                              \
   "https://api.github.com/repos/$REPO/releases"`
 if [ "`echo "$RESULT" | tail -1`" != "201" ]; then
   echo FAILED
@@ -162,9 +162,10 @@ JSON=$(cat <<EOF
 }
 EOF
 )
-RESULT=`curl -s -w "\n%{http_code}\n"                     \
-  --request PATCH -H "Authorization: token $GITHUBTOKEN"  \
-  --data "$JSON"                                          \
+RESULT=`curl -s -w "\n%{http_code}\n"     \
+  -X PATCH                                \
+  -H "Authorization: token $GITHUBTOKEN"  \
+  -d "$JSON"                              \
   "https://api.github.com/repos/$REPO/releases/$RELEASEID"`
 if [ "`echo "$RESULT" | tail -1`" = "200" ]; then
   echo DONE
