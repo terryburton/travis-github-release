@@ -1,6 +1,6 @@
 travis-github-release
 =====================
 
-Simple bash script for publishing release assets to GitHub Releases.
+A simple bash script to make Travis CI publish GitHub Releases and upload assets.
 
-Described more thoroughly in the script.
+Described more thoroughly in the github-release.sh script.
