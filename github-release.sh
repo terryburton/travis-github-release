@@ -108,15 +108,18 @@ echo "Creating GitHub release for $RELEASE"
 echo -n "Create draft release... "
 JSON=$(cat <<EOF
 {
-  "tag_name": "$TAG",
+  "tag_name":         "$TAG",
   "target_commitish": "master",
-  "name": "$TAG: New release",
-  "draft": true,
-  "prerelease": false
+  "name":             "$TAG: New release",
+  "draft":            true,
+  "prerelease":       false
 }
 EOF
 )
-RESULT=`curl -s -w "\n%{http_code}\n" -H "Authorization: token $GITHUBTOKEN" --data "$JSON" "https://api.github.com/repos/$REPO/releases"`
+RESULT=`curl -s -w "\n%{http_code}\n"     \
+  -H "Authorization: token $GITHUBTOKEN"  \
+  --data "$JSON"                          \
+  "https://api.github.com/repos/$REPO/releases"`
 if [ "`echo "$RESULT" | tail -1`" != "201" ]; then
   echo FAILED
   echo "$RESULT" 
@@ -138,12 +141,12 @@ for FILE in $RELEASEFILES; do
   FILESIZE=`stat -c '%s' "$FILE"`
   FILENAME=`basename $FILE`
   echo -n "Uploading $FILENAME... "
-  RESULT=`curl -s -w "\n%{http_code}\n" \
-       -H "Authorization: token $GITHUBTOKEN" \
-       -H "Accept: application/vnd.github.manifold-preview" \
-       -H "Content-Type: application/zip" \
-       --data-binary "@$FILE" \
-       "https://uploads.github.com/repos/$REPO/releases/$RELEASEID/assets?name=$FILENAME&size=$FILESIZE"`
+  RESULT=`curl -s -w "\n%{http_code}\n"                   \
+    -H "Authorization: token $GITHUBTOKEN"                \
+    -H "Accept: application/vnd.github.manifold-preview"  \
+    -H "Content-Type: application/zip"                    \
+    --data-binary "@$FILE"                                \
+    "https://uploads.github.com/repos/$REPO/releases/$RELEASEID/assets?name=$FILENAME&size=$FILESIZE"`
   if [ "`echo "$RESULT" | tail -1`" != "201" ]; then
     echo FAILED
     echo "$RESULT" 
@@ -159,7 +162,10 @@ JSON=$(cat <<EOF
 }
 EOF
 )
-RESULT=`curl -s -w "\n%{http_code}\n" --request PATCH -H "Authorization: token $GITHUBTOKEN" --data "$JSON" "https://api.github.com/repos/$REPO/releases/$RELEASEID"`
+RESULT=`curl -s -w "\n%{http_code}\n"                     \
+  --request PATCH -H "Authorization: token $GITHUBTOKEN"  \
+  --data "$JSON"                                          \
+  "https://api.github.com/repos/$REPO/releases/$RELEASEID"`
 if [ "`echo "$RESULT" | tail -1`" = "200" ]; then
   echo DONE
 else
