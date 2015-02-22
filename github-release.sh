@@ -38,8 +38,9 @@
 #
 # https://github.com/travis-ci/dpl
 #
-# Place this script somewhere like .travis/github-release.sh
-# then add something like this to your .travis.yml:
+# Place this script somewhere in your project repository (perhaps by forking
+# the github-travis-release repo and adding your fork as a git submodule) then
+# put something like this to your .travis.yml:
 #
 # after_success: .travis/github-release.sh "$TRAVIS_REPO_SLUG" "`head -1 src/VERSION`" build/release/*
 #
