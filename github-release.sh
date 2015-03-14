@@ -63,7 +63,7 @@
 # You must pass this securely in the GITHUBTOKEN environment
 # variable:
 #
-# http://docs.travis-ci.com/user/build-configuration/#Secure-environment-variables
+# http://docs.travis-ci.com/user/encryption-keys/
 #
 # For testing purposes you can create a local convenience
 # file in the script directory called GITHUBTOKEN that sets
