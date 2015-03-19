@@ -75,7 +75,7 @@
 # code is being used by Barcode Writer in Pure PostScript
 # for automated deployment:
 #
-# https://github.com/terryburton/postscriptbarcode
+# https://github.com/bwipp/postscriptbarcode
 
 set -e
 
