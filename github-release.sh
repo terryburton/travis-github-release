@@ -33,10 +33,10 @@
 # release and upload assets to it whenever a tag is pushed:
 # git tag; git push --tags
 #
-# It is created as a temporary solution whilst we wait for
-# Travis DPL to support GitHub:
+# It was created as a temporary solution whilst waiting for
+# Travis DPL to support GitHub, which it now does:
 #
-# https://github.com/travis-ci/dpl
+# http://docs.travis-ci.com/user/deployment/releases/
 #
 # Place this script somewhere in your project repository (perhaps by forking
 # the github-travis-release repo and adding your fork as a git submodule) then
