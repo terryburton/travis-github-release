@@ -122,7 +122,7 @@ JSON=$(cat <<EOF
 {
   "tag_name":         "$TAG",
   "target_commitish": "master",
-  "name":             "$TAG: New release",
+  "name":             "$TAG",
   "draft":            true,
   "prerelease":       false
 }
